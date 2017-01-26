@@ -81,7 +81,7 @@ tabla["hours-per-week"]
 La distancia entre este tipo de vectores la podemos ver como:
 Sean dos vectores *u* y *v* y \delta la Delta de Kroenecker:
 
-D = (\sum_i(\delta(*u*_i,*v*_i)))/n(*u*)
+$D = (\sum_i(\delta(u_i,v_i)))/n(u)$
 
 siendo n(*u*) la cardinalidad del vector. Para esto, *u* y *v* deben de tener el mismo número de elementos.
 
@@ -92,13 +92,13 @@ Se puede hacer de la misma manera que los booleanos ya que no tienen una escala
 La forma más usual de hacer esto es mediante una transformación de rango normalizada, esto es:
 Dado los valores que asignamos a cada nivel, hacemos una transformación de cada una de las entradas de la siguiente manera:
 
-x = \frac{r-1}{R-1}
+$x = \frac{r-1}{R-1}$
 
 con r el valor de la entrada del vector y R el máximo de los valores. De esta manera, obtenemos dos valores numéricos a los cuales les podemos sacar una distancia euclidiana:
 
 sean *u* y *v*
 
-D = sqrt{\sum((*u*_i-*v*_i)^2)}
+$D = \sqrt{\sum(u_i-v_i)^2}$
 
 + Numéricos de escala de intervalo
 
