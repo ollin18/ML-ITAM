@@ -1,0 +1,107 @@
+---
+title: "Tarea 1"
+author: "Ollin Demian Langle Chimal"
+date: "26 de Enero de 2017"
+output: 
+ioslides_presentation:
+incremental: true
+widescreen: true
+---
+  
+# Ollin Demian Langle Chimal
+## Tarea 1
+
+```{r}
+tabla <- read.csv("https://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.data",header=FALSE)
+
+names(tabla) <- c("age","workclass","fnlwgt", "education","education-num","marital-status","occupation","relationship","race","sex","capital-gain","capital-loss","hours-per-week","native-country")
+```
+
+# Tipos de datos
+
++ Booleanos
+En R éste tipo de datos es llamado lógico: representa un tipo de objeto binario y toma los valores ```TRUE``` Y ```FALSE``` que son equivalentes a ```0``` y ```1```
+```{r}
+booleanos <- c("TRUE","TRUE","FALSE","FALSE","TRUE")
+```
+
++ Binarios
+Cuando una variable puede tomar dos tipos de valores, se le llama binaria y puede ser del tipo numérica como ```0``` y ```1``` o también por medio de characters como ```Female``` y ```Male```  tal es el caso de la variable _"sex"_ de la base de datos _adult_ de UCI.
+
+```{r}
+tabla["sex"]
+```
+
++ Datos categóricos o nominales
+Dichos datos son aquellos que pueden tener más de dos categorías, lo cual podemos ver que son representados como *niveles* en R, esto lo podemos ver por ejemplo en la variable _marital-status_ si hacemos:
+```{r}
+tabla["marital-status"][1,]
+```
+Entonces obtendremos de resultado el valor de dicha entrada (que en este caso es "Never-married") y además los 7 niveles con los que cuenta dicha variable; Divorced, Married-AF-spouse, Widowed, etc.
+Cabe destacar que pueden ser números categóricos como lo es el número de alumno del ITAM, que aunque tiene una escala temporal intrínseca realmente sólo es un identificador.
+
++ Datos ordinales
+Estos datos son un tanto complicados pues aunque parecen categóricos y son representados usualmente por caracteres, estos tienen algún tipo de orden. Es decir, tienen algún tipo de valor ordinal en ellos. En sí se puede utilizar algún tipo de medida y asignarle un valor a cada uno de los niveles de dicho dato, la forma en la que se lo asignemos deberá ser adecuada a lo que queremos representar. Por ejemplo, si tomamos como ejemplo el futbol donde ganar te da 3 puntos, empatar te da 1 punto y perder cero puntos:
+```{r}
+gano = 3
+empato = 1
+perdio = 0
+```
+Podemos hacer la cuenta de los puntos que llevan los Pumas hasta el momento en éste torneo porque sabemos que perdió contra las Chivas, ganó contra Cruz Azul y ganó contra el León
+```{r}
+pumas = c(perdio,gano,gano)
+sum(pumas)
+```
+Lo cual arroja un valor de 6.
+
+Si tomamos en cuenta la base _adults_ podemos ver que la variable _education_ está relacionada con _education-num_ que es la que le da una ponderación a cada uno de los niveles educativos.
+```{r}
+tabla["education"]
+```
+
+Usualmente se utilizan los objetos *diccionarios* para poder llevar a cabo este tipo de relaciones.
+
++ Datos numéricos sin escala de razón
+De nuevo podemos tomar la variable _education-num_ como ejemplo
+```{r}
+tabla["education-num"]
+```
+Esto es porque en sí no toma en cuenta una calificación que tenga una escala de razón, es decir alguien con educación 14 de maestría no tiene el doble de educación que alguien con educación 7 o 11er grado.
+
++ Datos numéricos con escala de razón
+Estos de igual manera son variables numéricas pero sí tienen una escala definida.
+En el caso de nuestra base de datos, podemos utilizar la variable _hours-per-week_ que sí tiene una escala, pues 1 hora más 1 hora son 2 horas.
+```{r}
+tabla["hours-per-week"]
+```
+
+## Distancias entre vectores
+
++ Booleanos
+La distancia entre este tipo de vectores la podemos ver como:
+Sean dos vectores *u* y *v* y \delta la Delta de Kroenecker:
+
+D = (\sum_i(\delta(*u*_i,*v*_i)))/n(*u*)
+
+siendo n(*u*) la cardinalidad del vector. Para esto, *u* y *v* deben de tener el mismo número de elementos.
+
++ Categóricos
+Se puede hacer de la misma manera que los booleanos ya que no tienen una escala
+
++ Ordinales
+La forma más usual de hacer esto es mediante una transformación de rango normalizada, esto es:
+Dado los valores que asignamos a cada nivel, hacemos una transformación de cada una de las entradas de la siguiente manera:
+
+x = \frac{r-1}{R-1}
+
+con r el valor de la entrada del vector y R el máximo de los valores. De esta manera, obtenemos dos valores numéricos a los cuales les podemos sacar una distancia euclidiana:
+
+sean *u* y *v*
+
+D = sqrt{\sum((*u*_i-*v*_i)^2)}
+
++ Numéricos de escala de intervalo
+
+Esta misma técnica puede ser utilizada para obtener distancias entre los numéricos de escala de intervalo.
+
+
